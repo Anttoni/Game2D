@@ -1,28 +1,20 @@
 package com.Game2D.core;
 
 import com.Game2D.core.renderer.GameRenderer;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-public class GameScreen extends GameScreenContainer {
+public class GameScreen extends GameContainer {
 
 	public GameRenderer renderer = new GameRenderer();
 	
-	public GameScreen(Game game) {
-		super(game);
+	public static void main(String args[]) {
+	      LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+	      	cfg.title = "Drop";
+	      	cfg.useGL20 = true;
+	      	cfg.width = 800;
+	      	cfg.height = 480;
+	      new LwjglApplication(new GameContainer(), cfg);
 	}
-	
-	@Override
-	public void render(float delta) {
-		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
-		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			dispose();
-		}
-		
-	}
-	
+
 }
