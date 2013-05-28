@@ -1,9 +1,16 @@
 package com.Game2D.core;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 
 public class GameScreenContainer implements Screen {
 
+	public Game game;
+	
+	public GameScreenContainer(Game game) {
+		this.game = game;
+	}
+	
 	@Override
 	public void dispose() {
 
