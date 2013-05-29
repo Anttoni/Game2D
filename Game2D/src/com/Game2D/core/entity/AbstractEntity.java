@@ -1,29 +1,30 @@
 package com.Game2D.core.entity;
 
+import com.Game2D.core.util.Position;
+
 public abstract class AbstractEntity implements IEntity {
 	
-	protected int x;
-	protected int y;
+	protected Position position;
 	
 	public int getX() {
-		return x;
+		return position.getX();
 	}
 	
 	public int getY() {
-		return y;
+		return position.getY();
 	}
 	
-	public void setLocation(int x, int y) {
-		this.x = x;
-		this.y = y;
+	public void setPosition(int x, int y) {
+		position.setX(x);
+		position.setY(y);
 	}
 	
 	public void setX(int x) {
-		this.x = x;
+		position.setX(x);
 	}
 
 	public void setY(int y) {
-		this.y = y;
+		position.setY(y);
 	}
 	
 	public abstract void render(float delta);
