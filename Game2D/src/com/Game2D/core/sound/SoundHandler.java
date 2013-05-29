@@ -2,6 +2,7 @@ package com.Game2D.core.sound;
 
 import java.io.File;
 
+import com.Game2D.core.util.FileUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
@@ -15,21 +16,19 @@ public class SoundHandler {
 	
 	private int amountOfSounds;
 	public Sound[] sounds = new Sound[amountOfSounds];
-	private String[] fileNames;
 	public Sound currentlyPlaying;
 	public long soundID = 0;
 	protected float volume;
 
-	public void initSounds(String path) {
-		File folder = new File(path);
-		fileNames = folder.list();
+	public void initSounds(File file) {
+		String[] files = FileUtils.listAllFiles(file);
 		int count = 0;
-		for(int i = 0; i < fileNames.length; i++) {
-			String temp = fileNames[i].toString();
+		for(int i = 0; i < files.length; i++) {
+			String temp = files[i].toString();
 			sounds[i] = Gdx.audio.newSound(Gdx.files.internal(temp));
 			count++;
 		}
-		amountOfSounds = fileNames.length;
+		amountOfSounds = files.length;
 		System.out.println("Amount of sounds loaded: " + count);
 	}
 	
