@@ -19,17 +19,16 @@ public class SoundHandler {
 	public Sound currentlyPlaying;
 	public long soundID = 0;
 	protected float volume;
-
+	protected StringBuffer buffer;
+	
 	public void initSounds(File file) {
 		String[] files = FileUtils.listAllFiles(file);
-		int count = 0;
+		buffer = new StringBuffer();
 		for(int i = 0; i < files.length; i++) {
-			String temp = files[i].toString();
-			sounds[i] = Gdx.audio.newSound(Gdx.files.internal(temp));
-			count++;
+			buffer.append(files[i]);
+			sounds[i] = Gdx.audio.newSound(Gdx.files.internal(file.getAbsolutePath() + buffer.toString()));
 		}
 		amountOfSounds = files.length;
-		System.out.println("Amount of sounds loaded: " + count);
 	}
 	
 	/**
