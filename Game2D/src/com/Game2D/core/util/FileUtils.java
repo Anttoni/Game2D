@@ -15,6 +15,9 @@ public class FileUtils {
 	
 	public static String getExtension(String fileName) {
 		String[] splitter = fileName.split(".");
-		return splitter[splitter.length - 1];
+		if(splitter.length > 1) {
+			return splitter[splitter.length -1];
+		}
+		return splitter[1];
 	}
 }
