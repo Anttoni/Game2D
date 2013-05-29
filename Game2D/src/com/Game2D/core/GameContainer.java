@@ -1,37 +1,39 @@
 package com.Game2D.core;
 
-import com.badlogic.gdx.ApplicationListener;
+import com.Game2D.core.screens.SplashScreen;
 
-public class GameContainer implements ApplicationListener {
+import com.badlogic.gdx.Game;
+
+public class GameContainer extends Game {
 
 	@Override
 	public void create() {
-
+		setScreen(new SplashScreen(this));
 	}
 
 	@Override
 	public void dispose() {
-
+		super.dispose();
 	}
 
 	@Override
 	public void pause() {
-
+		super.pause();
 	}
 
 	@Override
 	public void render() {
-
+		super.render();
 	}
 
 	@Override
-	public void resize(int arg0, int arg1) {
-
+	public void resize(int width, int height) {
+		super.resize(width, height);
 	}
 
 	@Override
 	public void resume() {
-
+		super.resume();
 	}
 
 }
