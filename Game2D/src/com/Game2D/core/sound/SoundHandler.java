@@ -12,7 +12,6 @@ public class SoundHandler {
 	/*
 	 * Todo:
 	 *  - Play multiple sounds at once
-	 *  - Sound fade -  out / fade - in
 	 */
 	
 	private int amountOfSounds;
@@ -20,17 +19,16 @@ public class SoundHandler {
 	public Sound currentlyPlaying;
 	public long soundID = 0;
 	protected static float volume;
-	protected StringBuffer buffer;
+	protected StringBuffer buffer = new StringBuffer();
 	protected Timer timer = new Timer();
 	
 	public void initSounds(File file) {
 		String[] files = FileUtils.listAllFiles(file);
-		buffer = new StringBuffer();
+		amountOfSounds = FileUtils.getAmountOfFiles(file);
 		for(int i = 0; i < files.length; i++) {
 			buffer.append(files[i]);
 			sounds[i] = Gdx.audio.newSound(Gdx.files.internal(file.getAbsolutePath() + buffer.toString()));
 		}
-		amountOfSounds = files.length;
 	}
 	
 	/**

@@ -20,4 +20,9 @@ public class FileUtils {
 		}
 		return splitter[1];
 	}
+	
+	public static int getAmountOfFiles(File file) {
+		return file.list().length;
+	}
+	
 }

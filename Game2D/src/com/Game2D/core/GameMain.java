@@ -8,12 +8,15 @@ public class GameMain extends GameContainer {
 
 	public GameRenderer renderer = new GameRenderer();
 	
+	public final static int WIDTH = 1280;
+	public final static int HEIGHT = 720;
+	
 	public static void main(String args[]) {
 	      LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 	      	cfg.title = "2D Roguelike Game";
 	      	cfg.useGL20 = false;
-	      	cfg.width = 1280;
-	      	cfg.height = 720;
+	      	cfg.width = WIDTH;
+	      	cfg.height = HEIGHT;
 	      new LwjglApplication(new GameContainer(), cfg);
 	}
 }
