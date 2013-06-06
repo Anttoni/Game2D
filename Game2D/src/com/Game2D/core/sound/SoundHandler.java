@@ -53,36 +53,5 @@ public class SoundHandler {
 	public static void dispose(String name) {
 		soundMap.get(name).dispose();
 	}
-	
-	
-	/**
-	 * @param sound Sound to fade out.
-	 * @param volume The final amount of volume
-	 * @param time Time between decreasing the volume
-	 */
-	
-	public static void fadeOut(final Sound sound, final float volume, final float time) {
-		timer.scheduleTask(new Timer.Task() {
-			@Override
-			public void run() {
-				
-			}
-		}, time);
-	}
-	
-	/**
-	 * @param sound Sound to fade in
-	 * @param volume The final amount of volume (0 for mute, 1 for highest possible)
-	 * @param time Time between increasing the volume
-	 */
-	
-	public static void fadeIn(final Sound sound, final float volume, final float time) {
-		timer.scheduleTask(new Timer.Task() {
-			@Override
-			public void run() {
-				
-			}
-		}, time);
-	}
-	
+
 }
