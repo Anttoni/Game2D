@@ -1,7 +1,10 @@
 package com.Game2D.core.sound;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.Game2D.core.GameMain;
 import com.Game2D.core.util.FileUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -11,81 +14,46 @@ public class SoundHandler {
 
 	/*
 	 * Todo:
-	 *  - Play multiple sounds at once
+	 *  - Play multiple sounds at once, could work, not tested
 	 */
 	
-	private int amountOfSounds;
-	public Sound[] sounds = new Sound[amountOfSounds];
-	public Sound currentlyPlaying;
-	public long soundID = 0;
-	protected static float volume;
-	protected StringBuffer buffer = new StringBuffer();
-	protected Timer timer = new Timer();
+	protected static StringBuilder buffer;
+	protected static Timer timer = new Timer();
 	
-	public void initSounds(File file) {
-		String[] files = FileUtils.listAllFiles(file);
-		amountOfSounds = FileUtils.getAmountOfFiles(file);
+	protected static Map<String, Sound> soundMap = new HashMap<String, Sound>();
+	
+	public static void initSounds() {
+		buffer = new StringBuilder();
+		String[] files = FileUtils.listAllFiles(new File(GameMain.SOUND_PATH));
 		for(int i = 0; i < files.length; i++) {
 			buffer.append(files[i]);
-			sounds[i] = Gdx.audio.newSound(Gdx.files.internal(file.getAbsolutePath() + buffer.toString()));
+			soundMap.put(buffer.toString(), Gdx.audio.newSound(Gdx.files.internal(GameMain.SOUND_PATH + buffer.toString())));
+			buffer.delete(0, buffer.length());
 		}
 	}
 	
-	/**
-	 * @param sound Sound to play
-	 */
-	public void playSound(Sound sound) {
-		if(currentlyPlaying == null) {
-			currentlyPlaying = sound;
-			soundID = sound.play(volume);
-		} else if(currentlyPlaying != null) {
-			currentlyPlaying.stop();
-			soundID = sound.play(volume);
+	public static void playSound(String name, float volume) {
+		if(soundMap.containsKey(name)) {
+			Sound sound = soundMap.get(name);
+			long id = soundMap.get(name).play();
+			sound.setVolume(id, volume);
+		} else {
+			System.out.println("Sound could not be found");
 		}
 	}
-	
-	public void stopPlaying() {
-		if(currentlyPlaying != null)
-			currentlyPlaying.stop();
+
+	public static void destroy() {
+		for(Map.Entry<String, Sound> entry : soundMap.entrySet()) {
+			Sound sound = entry.getValue();
+			sound.dispose();
+		}
+		soundMap.clear();
 	}
 	
-	/**
-	 * @param sound The sound to play
-	 * @param volume The volume to set (between 0, 1)
-	 */
-	public void setVolume(Sound sound, float volume) {
-		sound.setVolume(soundID, volume);
-		SoundHandler.volume = volume;
+	public static void dispose(String name) {
+		soundMap.get(name).dispose();
 	}
 	
-	/**
-	 * @param sound Sound to change pan and volume
-	 * @param pan Pan (-1 for Left, 1 for Right, 0 for center)
-	 * @param volume The volume to set (between 0, 1)
-	 */
-	public void setPan(Sound sound, float pan, float volume) {
-		sound.setPan(soundID, pan, volume);
-	}
-	
-	/**
-	 * @param sound Sound to set looping
-	 * @param flag true or false
-	 */
-	public void setLooping(Sound sound, boolean flag) {
-		sound.setLooping(soundID, flag);
-	}
-	
-	/**
-	 * @param sound Sound to change pitch
-	 * @param pitch <-1 Lower - 0 Normal - >1 Higher
-	 */
-	public void setPitch(Sound sound, float pitch) {
-		sound.setPitch(soundID, pitch);
-	}
-	
-	public void destroy(Sound sound) {
-		sound.dispose();
-	}
 	
 	/**
 	 * @param sound Sound to fade out.
@@ -93,11 +61,11 @@ public class SoundHandler {
 	 * @param time Time between decreasing the volume
 	 */
 	
-	public void fadeOut(Sound sound, final float volume, float time) {
+	public static void fadeOut(final Sound sound, final float volume, final float time) {
 		timer.scheduleTask(new Timer.Task() {
 			@Override
 			public void run() {
-				SoundHandler.volume -= (volume * 0.1);
+				
 			}
 		}, time);
 	}
@@ -108,11 +76,11 @@ public class SoundHandler {
 	 * @param time Time between increasing the volume
 	 */
 	
-	public void fadeIn(Sound sound, final float volume, float time) {
+	public static void fadeIn(final Sound sound, final float volume, final float time) {
 		timer.scheduleTask(new Timer.Task() {
 			@Override
 			public void run() {
-				SoundHandler.volume += (volume * 0.1);
+				
 			}
 		}, time);
 	}
